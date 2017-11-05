@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <script>
+    function isEven(n) {
+      var mod = n % 2;
+      if (mod == 0){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    function isOdd(n) {
+      var mod = n % 2;
+      if (mod == 1){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    var input = prompt("Enter number");
+    if (isEven(input)){
+      document.write("even");
+    }
+    else if (isOdd(input)){
+      document.write("odd");
+    }
+    else{
+      document.write("数字ではない");
+    }
+
+
+      /* var n = prompt("Enter number");
+     var mod = n % 2;
+     if (mod == 0) {
+       document.write("even");
+     }
+     else if (mod == 1){
+       document.write("odd");
+     }
+     else{
+       document.write("数字ではない");
+     }
+     */
+    </script>
+  </head>
+　<body></body>
+</html>

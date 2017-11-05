@@ -1,0 +1,22 @@
+
+    body {
+      font-family: serif;
+      text-align: center;
+    }
+     canvas {
+       border: dotted 2px green;
+     }
+     #score {
+       font-size: 36px;
+     }
+     #game-over {
+       font-size: 80px;
+       color: red;
+     }
+     #play-again {
+       font-size: 40px;
+       color: orange;
+     }
+     .hide {
+       visibility: hidden;
+     }

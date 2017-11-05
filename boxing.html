@@ -1,0 +1,134 @@
+<html>
+  <head>
+    <style>
+      body {
+        text-align: center;
+      }
+      table {
+        margin: 1em auto;
+      }
+      
+      img {
+        width:200px;
+      }
+      button {
+        padding: 15px 35px;
+      }
+
+    
+    </style>
+    <script>
+      
+      /*
+       *Person class
+       */
+      function Person(firstName, lastName, hitPoint) { // Constructor
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.hitPoint = hitPoint;
+      }
+
+      Person.prototype = {
+        fullName: function() {
+          return this.firstName + ' ' + this.lastName;
+        },
+
+        greet: function() {
+          return "Hi, my name is " + this.fullName();
+        }
+      };
+
+      function fight(p1, p2) {
+        var hit1 = Math.round(Math.random() * 10);
+        var hit2 = Math.round(Math.random() * 10);
+        p1.hitPoint -= hit1;
+        p2.hitPoint -= hit2;
+        if (p1.hitPoint < 0 ) {
+          p1.hitPoint = 0;
+        }
+
+        if (p2.hitPoint < 0 ) {
+          p2.hitPoint = 0;
+        }
+      }
+
+      function fight2() {
+        if (p1.hitPoint > 0 && p2.hitPoint > 0) {
+          fight(p1,p2);
+          hitElement1.innerText = p1.hitPoint;
+          hitElement2.innerText = p2.hitPoint;
+        }
+        if (p1.hitPoint === 0) {
+          pictureElement1.src = "yosuke-down.jpg"
+        }    
+        if (p2.hitPoint === 0) {
+          pictureElement2.src = "shunta-down.jpg"
+        }
+      }
+      
+      var p1 = new Person("Yosuke","Doi", 20);
+      var p2 = new Person("Shunta","Doi", 20);
+      var hitElement1; 
+      var hitElement2;
+      var pictureElement1;
+      var pictureElement2;
+      
+      function main() {
+        var nameElement1 = document.getElementById("name1");
+        var nameElement2 = document.getElementById("name2");
+        
+        hitElement1 = document.getElementById("hit1");
+        hitElement2 = document.getElementById("hit2"); 
+        
+        pictureElement1 = document.getElementById("picture1");
+        pictureElement2 = document.getElementById("picture2"); 
+
+        nameElement1.innerText = p1.fullName();
+        nameElement2.innerText = p2.fullName();
+
+        hitElement1.innerText = p1.hitPoint;
+        hitElement2.innerText = p2.hitPoint;
+        
+        
+/*
+        while (p1.hitPoint > 0 && p2.hitPoint > 0) {
+         fight(p1,p2); 
+          
+          hitElement1.innerText = p1.hitPoint;
+          hitElement2.innerText = p2.hitPoint;
+        }
+*/
+
+      }
+      
+
+      window.onload = main;
+
+
+
+    </script>
+
+  </head>
+  <body>
+
+    <table>
+
+      <tr>
+        <td><img id="picture1" src="yosuke.jpg" /></td>
+        <td><img id="picture2" src="shunta.jpg" /></td>
+      </tr> 
+      <tr> 
+        <td id="name1"></td>
+        <td id="name2"></td>
+      </tr>
+
+      <tr>
+        <td id="hit1"></td>
+        <td id="hit2"></td>
+      </tr>
+    </table>
+      
+    <button onclick="fight2()">fight</button>
+  </body>
+
+</html>

@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <style>
+     canvas{
+       border: dotted 1px blue;
+     }
+    </style>
+
+    <script>
+    function MyCanvas() {
+      this.canvas = document.getElementById("myCanvas");
+      this.context = this.canvas.getContext("2d");
+      this.x0 =  this.canvas.width/2;
+      this.y0 =  this.canvas.height/2;
+    }
+    MyCanvas.prototype = {
+      plot: function(x,y)  {
+        this.context.lineTo(this.x0 + x ,this.y0 - y );
+      },
+
+      draw: function(f) {
+        this.context.beginPath();
+        this.context.strokeStyle="orange";
+        for (var x = -this.canvas.width/2 ; x < this.canvas.width/2 ; x++){
+            this.plot(x, f(x));
+        }
+        this.context.stroke();
+      },
+
+      drawXAxis: function(){
+        this.context.beginPath();
+        this.context.moveTo(0,this.canvas.width/2);
+        this.context.lineTo(this.canvas.width,this.canvas.width/2);
+        this.context.stroke();
+      },
+      drawYAxis: function (){
+        this.context.beginPath();
+        this.context.moveTo(this.canvas.width/2,0);
+        this.context.lineTo(this.canvas.width/2,this.canvas.width);
+        this.context.stroke();
+      }
+    }
+
+
+
+    window.onload = function(){
+      var myCanvas = new MyCanvas();
+
+      myCanvas.drawXAxis();
+      myCanvas.drawYAxis();
+
+      function f1(x){
+        return x;
+      }
+
+     function f2(x){
+       return x*x;
+      }
+      myCanvas.draw(f1);
+
+    };
+
+
+
+
+
+    </script>
+  </head>
+  <body>
+    <canvas width="400" height="400" id="myCanvas"></canvas>
+  </body>
+</html>

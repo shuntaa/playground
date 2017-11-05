@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <script>
+      function Person(firstName, lastName) { // Constructor
+        this.firstName = firstName;
+        this.lastName = lastName;
+      }
+
+      Person.prototype = {
+        fullName: function() {
+          return this.firstName + ' ' + this.lastName;
+        },
+
+        greet: function() {
+          return "Hi, my name is " + this.fullName();
+        }
+      };
+
+
+
+      var dad = new Person("Yosuke","Doi");
+      var shunta = new Person("Shunta","Doi");
+      
+      console.log(dad.fullName());
+      console.log(dad.greet());
+      console.log(shunta.fullName());
+      console.log(shunta.greet());
+
+
+
+
+
+    </script>
+
+  </head>
+  <body>
+
+  </body>
+
+</html>

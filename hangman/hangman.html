@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <style>
+      #letters {
+        letter-spacing: 1rem;
+        font-size: 50px;
+        text-align: center;  
+      }
+      #missed-letters-container {
+        font-size: 30px;
+        padding-left: 17rem;
+      }
+      #missed-letters {
+        color: red;
+      }
+      #image {
+        width: 600px;
+      }
+      #message {
+        font-size: 100px;
+        text-align: center;  
+        color: blue;
+      }
+
+    </style>
+
+    <script>
+      function createMasked(word) {
+        for (var i = 0; i < word.length; i++) {
+          screenLetters += "_";
+        }
+        return screenLetters; 
+      }
+
+      function isGameOver() {
+        return (missedLetters.length === 6);   
+      }
+      
+      function isClear() {
+        return (screenLetters.indexOf("_") === -1);
+      }
+
+
+
+      function handleGuess(event) {
+        var guess = event.key; 
+        var index = remainingLetters.indexOf(guess);
+        
+        if (screenLetters.indexOf(guess) >= 0 || missedLetters.indexOf(guess) >= 0) { // already hit
+          return;
+        }
+        if (index === -1) { // missed
+          missedLetters += guess; 
+          missedLettersElement.innerText = missedLetters;
+          imageElement.src = "hang" + missedLetters.length + ".png";
+          if (isGameOver()) {
+            messageElement.innerText = "Game Over";
+            document.onkeypress = null;
+          }
+        }
+        else { // hit
+          while (index >= 0){ // Because there may be more than one
+            screenLetters =  screenLetters.substr(0, index) + guess + screenLetters.substr(index + 1);
+            remainingLetters =  remainingLetters.substr(0, index) + "_"  + remainingLetters.substr(index + 1);
+            index = remainingLetters.indexOf(guess);
+          }
+          lettersElement.innerText = screenLetters;
+          if (isClear()) {
+            document.onkeypress = null;
+            imageElement.src = "hang-clear.png";
+          }
+        } 
+      }
+      
+      
+      var lettersElement; 
+      var missedLettersElement;
+      var imageElement;
+      var messageElement;
+
+
+      var remainingLetters; 
+      var screenLetters = "";
+      var missedLetters = "";
+
+      window.onload = function() {
+        remainingLetters = prompt("Enter word");
+        lettersElement = document.getElementById("letters");
+        lettersElement.innerText = createMasked(remainingLetters);     
+        missedLettersElement = document.getElementById("missed-letters"); 
+        imageElement = document.getElementById("image"); 
+        messageElement = document.getElementById("message");
+      };
+
+      document.onkeypress = handleGuess;
+
+
+    </script>
+
+
+  </head>
+
+  <body>
+    <div id="letters"></div>
+    <div id="missed-letters-container">
+      Missed letters : <span id="missed-letters"></span>
+    </div>
+    <div id="message"></div>
+    <img id="image" src="hang0.png"></img>
+  </body>
+</html>

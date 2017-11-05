@@ -1,0 +1,131 @@
+<html>
+  <head>
+    <style>
+    body {
+      font-family: serif;
+      text-align: center;
+    }
+     canvas {
+       border: dotted 2px green;
+     }
+     #score {
+       font-size: 36px;
+     }
+     #game-over {
+       font-size: 80px;
+       color: red;
+     }
+     #play-again {
+       font-size: 40px;
+       color: orange;
+     }
+     .hide {
+       visibility: hidden;
+     }
+    </style>
+
+    <script>
+    var canvas, context;
+    var x, y;
+    var xDiff = 0, yDiff = 0;
+    var score = 0;
+    var scoreElement;
+    var gameOverElement;
+    var playAgainButton;
+
+
+    function main() {
+      canvas = document.getElementById("my-canvas");
+      context = canvas.getContext("2d");
+      scoreElement = document.getElementById("score");
+      gameOverElement = document.getElementById("game-over");
+      playAgainButton = document.getElementById("play-again");
+      x = canvas.width/2;
+      y = canvas.height/2;
+      initGame();
+    }
+
+
+    function initGame() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.beginPath();
+      score = 0, xDiff = 0, yDiff = 0, x = canvas.width/2, y =canvas.height/2 ;
+      scoreElement.innerHTML = score;
+      gameOverElement.classList.add("hide");
+      playAgainButton.classList.add("hide");
+      context.beginPath();
+      setTimeout(function() {
+        context.fillStyle = "red";
+        context.fillRect(150,40,10,10);
+      },5000);
+    }
+
+
+    function isInCanvas() {
+      var xInBounds =  (x >= 0) && (x <= canvas.width);
+      var yInBounds =  (y >= 0) && (y <= canvas.height);
+      return xInBounds && yInBounds;
+    }
+
+
+    function draw() {
+      var speed;
+      speed = 2;
+      context.strokeStyle= "blue";
+      x += xDiff * speed;
+      y += yDiff * speed;
+
+      if(context.isPointInStroke(x,y) || !isInCanvas()){
+        playAgainButton.classList.remove("hide");
+        gameOverElement.classList.remove("hide");
+      }
+      else{
+        context.lineTo(x,y);
+        score++;
+        scoreElement.innerHTML = score;
+        context.stroke();
+        window.requestAnimationFrame(draw);
+      }
+    }
+
+    function handleKey(e) {
+      console.log(e.keyCode);
+      switch (e.keyCode) {
+        case 37:
+          xDiff = -1, yDiff = 0
+          break;
+        case 38:
+          xDiff = 0, yDiff = -1
+          break;
+        case 39:
+          xDiff = 1, yDiff =0
+          break;
+        case 40:
+          xDiff = 0, yDiff = 1
+          break;
+      }
+     if((score === 0)&& (37 <= e.keyCode && e.keyCode <= 40)){
+       window.requestAnimationFrame(draw);
+     }
+    }
+
+
+    document.onkeydown = handleKey;
+    window.onload = main;
+
+    </script>
+
+  </head>
+
+  <body>
+    <div id="game-over" class="hide">game over</div>
+    <div>
+      score:
+      <span id="score">0</span>
+    </div>
+    <canvas width="200" height="200" id="my-canvas"></canvas>
+    <div>
+      <button id="play-again" class="hide" onclick="initGame()">play again</button>
+    </div>
+  </body>
+</html>
