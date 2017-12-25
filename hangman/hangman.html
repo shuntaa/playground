@@ -1,11 +1,12 @@
 <html>
   <head>
     <style>
-      #letters {
+      #letters, #answer {
         letter-spacing: 1rem;
         font-size: 50px;
         text-align: center;  
       }
+
       #missed-letters-container {
         font-size: 30px;
         padding-left: 17rem;
@@ -54,7 +55,7 @@
           missedLettersElement.innerText = missedLetters;
           imageElement.src = "hang" + missedLetters.length + ".png";
           if (isGameOver()) {
-            lettersElement.innerText = words[selectedIndex];
+            answerElement.innerText = words[selectedIndex];
             messageElement.innerText = "Game Over";
             document.onkeypress = null;
           }
@@ -75,6 +76,7 @@
       
       
       var lettersElement; 
+      var answerElement;
       var missedLettersElement;
       var imageElement;
       var messageElement;
@@ -94,6 +96,8 @@
         remainingLetters = words[selectedIndex]; 
         lettersElement = document.getElementById("letters");
         lettersElement.innerText = createMasked(remainingLetters);     
+        answerElement = document.getElementById("answer");
+
         missedLettersElement = document.getElementById("missed-letters"); 
         imageElement = document.getElementById("image"); 
         messageElement = document.getElementById("message");
@@ -109,6 +113,8 @@
 
   <body>
     <div id="letters"></div>
+    <div id="answer"></div>
+    
     <div id="missed-letters-container">
       Missed letters : <span id="missed-letters"></span>
     </div>
