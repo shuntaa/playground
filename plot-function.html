@@ -1,12 +1,22 @@
 <html>
   <head>
     <style>
-     canvas{
+     canvas {
        border: dotted 1px blue;
+     }
+     body {
+       text-align: center;
+     }
+     div {
+       margin: 10px;
      }
     </style>
 
     <script>
+    var UNIT = 30; //pixels per unit
+    var myCanvas;
+    var message;
+
     function MyCanvas() {
       this.canvas = document.getElementById("myCanvas");
       this.context = this.canvas.getContext("2d");
@@ -15,49 +25,67 @@
     }
     MyCanvas.prototype = {
       plot: function(x,y)  {
-        this.context.lineTo(this.x0 + x ,this.y0 - y );
+        this.context.lineTo(this.x0 + UNIT*x ,this.y0 - UNIT*y );
       },
 
       draw: function(f) {
         this.context.beginPath();
-        this.context.strokeStyle="orange";
+        this.context.strokeStyle = "#000080";
         for (var x = -this.canvas.width/2 ; x < this.canvas.width/2 ; x++){
-            this.plot(x, f(x));
+            this.plot(x/UNIT, f(x/UNIT));
         }
         this.context.stroke();
       },
 
       drawXAxis: function(){
+        this.context.strokeStyle = "#80808005";
         this.context.beginPath();
-        this.context.moveTo(0,this.canvas.width/2);
-        this.context.lineTo(this.canvas.width,this.canvas.width/2);
+        for (var i = this.canvas.height/2 ; i <this.canvas.height ; i += UNIT){
+        this.context.moveTo(0,i);
+        this.context.lineTo(this.canvas.width,i);
         this.context.stroke();
+        }
+        for (var i = this.canvas.height/2 ; i >0 ; i -= UNIT){
+        this.context.moveTo(0,i);
+        this.context.lineTo(this.canvas.width,i);
+        this.context.stroke();
+        }
       },
       drawYAxis: function (){
         this.context.beginPath();
-        this.context.moveTo(this.canvas.width/2,0);
-        this.context.lineTo(this.canvas.width/2,this.canvas.width);
+        for (var i = this.canvas.width/2 ; i <this.canvas.width ; i += UNIT){
+        this.context.moveTo(i,0);
+        this.context.lineTo(i,this.canvas.height);
         this.context.stroke();
+        }
+        for (var i = this.canvas.width/2 ; i >0 ; i -= UNIT){
+        this.context.moveTo(i,0);
+        this.context.lineTo(i,this.canvas.height);
+        this.context.stroke();
+        }
       }
     }
 
+    function update(e) {
+      message.innerHTML = "";
+      function f3(x) { 
+        return eval(e.currentTarget.value);      
+      }
+      try {
+        myCanvas.draw(f3);
+      }
+      catch(e) {
+        message.innerHTML = e.toString();
+      }
+    }
 
-
+    
     window.onload = function(){
-      var myCanvas = new MyCanvas();
+      message =document.getElementById("message");
+      myCanvas = new MyCanvas();
 
       myCanvas.drawXAxis();
       myCanvas.drawYAxis();
-
-      function f1(x){
-        return x;
-      }
-
-     function f2(x){
-       return x*x;
-      }
-      myCanvas.draw(f1);
-
     };
 
 
@@ -67,6 +95,12 @@
     </script>
   </head>
   <body>
-    <canvas width="400" height="400" id="myCanvas"></canvas>
+    <canvas width="600" height="500" id="myCanvas"></canvas>
+
+    <div>
+      f(x) =  <input type="text" onchange="update(event)"></input>
+    </div>
+    <div id="message">
+    </div>
   </body>
 </html>

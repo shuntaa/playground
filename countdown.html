@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <style>
+      body {
+        text-align: center; 
+      }
+      #timeLeft {
+        font-size: 30px;
+        margin-top: 4rem;
+      }
+    </style>
+    <script>
+      var textElement;
+      var tokyoOlympic = new Date(2020, 6, 24, 20);
+      
+
+      function formatDate(d) {
+       return d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日" + d.getHours() + "時";
+      }
+      
+
+      window.onload = function() {
+        textElement = document.getElementById("timeLeft");
+        dateElement = document.getElementById("date");
+        dateElement.innerHTML = formatDate(tokyoOlympic);
+        setInterval(update, 1000);
+      }
+
+
+      function update() {
+        var totalSeconds = Math.trunc((tokyoOlympic - new Date()) / 1000);
+        var totalMinutes = Math.trunc((totalSeconds / 60)); 
+        var totalHours = Math.trunc((totalMinutes / 60)); 
+        var totalDays = Math.trunc((totalHours / 24)); 
+        //textElement.innerHTML = new Date();
+        textElement.innerHTML = totalDays + "日 " + totalHours % 24 + "時間 " + totalMinutes % 60 + "分 " + totalSeconds % 60  + "秒 "; 
+      }
+    </script>
+  </head>
+  <body>
+    <img src="https://tokyo2020.org/jp/assets/img/pages/top/m/logo_main_01.png"></img>
+    <div>
+      東京オリンピック<span id="date"></span>まであと
+    </div>
+    <div id="timeLeft"></div> 
+  </body>
+</html>

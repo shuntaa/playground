@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <style>
+      canvas {
+        border: dotted 1px red;
+      }
+    </style>
+    <script>
+      var G = 9.8; // gravity is 9.8 m/s/s
+      var context;
+      var x = 0;
+      var y = 0;
+      var tPrevious;
+      var t0;
+      var xStep = 1;
+      var xMax;
+
+      function init() {
+        var canvas = document.getElementById("canvas"); 
+        //x = canvas.width / 2;
+        context = canvas.getContext("2d");
+        context.strokeStyle = "blue";
+        context.beginPath();
+        tPrevious = t0 = Date.now();
+        xMax = canvas.width;
+      }
+      function step() {
+        var now = Date.now();  
+        var currentV = (now-t0) * G / 1000  // m/s
+        var yDelta = (now-tPrevious) / 1000 * currentV;
+        if (x === xMax){
+          xStep = -1;
+        }
+        else if (x === 0){
+          xStep = 1;
+        }
+        y += yDelta;
+        context.lineTo(x, y);
+        context.stroke();
+        x += xStep;
+        tPrevious = now;
+        window.requestAnimationFrame(step);  
+      }
+
+      window.onload = function(){
+        init();
+        window.requestAnimationFrame(step);
+      };
+  
+    </script>
+  </head>
+  <body>
+    <canvas width="300" height="600" id="canvas"></canvas>
+  </body>
+</html>

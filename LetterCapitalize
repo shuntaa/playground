@@ -1,0 +1,24 @@
+function LetterCapitalize(str) { 
+
+    // code goes here  
+    
+  var previous;  
+  var result = "";
+  for (i = 0; i < str.length; i++) {
+     
+    if (previous === " " || i === 0) {
+      result += str[i].toUpperCase(); 
+   }
+    else {
+      result += str[i];
+    }
+    
+    previous = str[i];
+  }
+
+      return result; 
+               
+}
+   
+   // keep this function call here 
+   console.log(LetterCapitalize("hello world"));   

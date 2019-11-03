@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <style>
+      canvas {
+        border: dotted 1px black;
+      }
+      body {
+        text-align: center;
+      }
+    </style>
+    <script>
+      var context;
+      var x, y;
+      var xMax;
+      var yMax;
+      var xStep = 1;
+      var yStep = 1.3;
+
+      function init() {
+        var canvas = document.getElementById("canvas"); 
+        x = canvas.width / 2;
+        y = canvas.height / 2;
+        xMax = canvas.width;
+        yMax = canvas.height;
+        context = canvas.getContext("2d");
+        context.strokeStyle = "blue";
+        context.beginPath();
+      }
+      function step() {
+        if (x <= 0 || x >= xMax){
+          xStep *= -1;
+        }
+        if (y <= 0 || y >= yMax){
+          yStep *= -1;
+        }
+        x += xStep;
+        y += yStep;
+        context.lineTo(x, y);
+        context.stroke();
+        window.requestAnimationFrame(step);  
+      }
+
+      window.onload = function(){
+        init();
+        window.requestAnimationFrame(step);
+      };
+  
+    </script>
+  </head>
+  <body>
+    <canvas width="500" height="500" id="canvas"></canvas>
+  </body>
+</html>
