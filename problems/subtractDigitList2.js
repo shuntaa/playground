@@ -1,8 +1,6 @@
+var result = [];
+
 function subtract(digits1, digits2) {
-  var result = [];
-  var diff;
-  var carry = 0;
-  var i = Math.max(digits1.length, digits2.length) - 1;
   var negative = false;
   
   if (compare(digits1,digits2) === -1) {
@@ -11,6 +9,18 @@ function subtract(digits1, digits2) {
     digits2 = tmp;
     negative = true;
   }
+   _subtract(digits1, digits2);
+
+  if (negative) {
+    result.unshift("-");
+  }
+  return result;
+}
+
+function _subtract(digits1, digits2) {
+  var diff;
+  var carry = 0;
+  var i = Math.max(digits1.length, digits2.length) - 1;
 
   for (; i >= 0; i--) {
     diff = (digits1.pop() || 0) - (digits2.pop() || 0) - carry;
@@ -21,11 +31,6 @@ function subtract(digits1, digits2) {
     }
     result.unshift(diff);
   }
-
-  if (negative) {
-    result.unshift("-");
-  }
-  return result;
 }
 
 function compare(digits1, digits2) {
