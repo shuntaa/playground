@@ -8,12 +8,15 @@ function selectionSort(array) {
         minIndex = j;
       }
     }
-    temp = array[i];
-    array[i] = array[minIndex];
-    array[minIndex] = temp;
+    swap(array, i, minIndex);
   }
   return array;
 }
 
+function swap(array, i, j) {
+  var temp = array[i];
+  array[i] = array[j];
+  array[j] = temp;
+}
 
 console.log(selectionSort([2, 10, 9, 30, 5]));
